@@ -1,0 +1,10 @@
+﻿  D3D12VR.cpp
+  VRD3D12.cpp
+C:\D3D12VR\D3D12VR\VRD3D12.cpp(79,16): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\D3D12VR\D3D12VR\VRD3D12.cpp(80,17): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+  Generating code
+  18 of 222 functions ( 8.1%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  D3D12VR.vcxproj -> C:\D3D12VR\x64\Release\D3D12VR.exe
