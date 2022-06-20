@@ -48,8 +48,8 @@ public:
     D3D12_RECT sr;
     ID3D12CommandList* const commandLists[1] = {List.Get()};
     //FenceObjects
-	COM<ID3D12Fence> Fence;
-	UINT FenceValue = 0;
+    COM<ID3D12Fence> Fence[Buffers];
+    UINT FenceValue[Buffers];
     UINT64 FrameFenceValues[Buffers] = {};
     HANDLE FenceEvent;
     GameTimer g;

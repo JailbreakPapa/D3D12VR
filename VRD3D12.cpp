@@ -54,7 +54,7 @@ void VRD3D12::CreateContexts(HWND win)
    }
    ThrowIfFailed(Device->CreateCommandList(NULL, D3D12_COMMAND_LIST_TYPE_DIRECT,Alloc[BBIndex].Get(), NULL, IID_PPV_ARGS(&List)));
    ThrowIfFailed(List->Close());
-   Alloc[BBIndex]->Reset();
+   //Alloc[Buffers]->Reset();
    SetFenceEvents();
 }
 
@@ -89,9 +89,11 @@ void VRD3D12::InitBaseAssets()
 void VRD3D12::SetFenceEvents()
 {
     auto num_back_buffers = BBIndex;
-    // create the fences
-ThrowIfFailed(Device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&Fence)));
-        FenceValue = 0; // set the initial fence value to 0
+    // create the fence
+    for (auto p{ 0 }; p < Buffers; p++) {
+        ThrowIfFailed(Device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&Fence[p])));
+        FenceValue[p] = 0; // set the initial fence value to 0
+    }
     // create a handle to a fence event
     FenceEvent= CreateEvent(nullptr, FALSE, FALSE, nullptr);
     if (FenceEvent == nullptr) {
@@ -130,9 +132,8 @@ void VRD3D12::FindAdaptors()
 
 void VRD3D12::Render()
 {
+    Alloc[BBIndex]->Reset();
     auto index = Swap->GetCurrentBackBufferIndex();
-    Alloc[index]->Reset();
-    
 	static float clear_color[4] = { 0.568f, 0.733f, 1.0f, 1.0f };
     BBIndex = Swap->GetCurrentBackBufferIndex();
     ThrowIfFailed(List->Reset(Alloc[BBIndex].Get(), nullptr));
@@ -159,7 +160,7 @@ void VRD3D12::Render()
     cmd_lists[0] = List.Get();
     Queue->ExecuteCommandLists(1, cmd_lists);
     // GPU Signal
-    ThrowIfFailed(Queue->Signal(Fence.Get(), FenceValue[&index]));
+    ThrowIfFailed(Queue->Signal(Fence[BBIndex].Get(), FenceValue[BBIndex]));
     ThrowIfFailed(Swap->Present(1, 0));
     WaitForPrevFrame();
     // Update our frame index
@@ -192,9 +193,9 @@ bool VRD3D12::CreateShader(LPCWSTR ShaderName, std::string Main, ShaderT& Type)
 
 void VRD3D12::WaitForPrevFrame()
 {
-    if (Fence->GetCompletedValue() < FenceValue[&BBIndex]) {
+    if (Fence[BBIndex]->GetCompletedValue() < FenceValue[BBIndex]) {
         // we have the fence create an event which is signaled once the fence's current value is "fence_value"
-        HRESULT hr = Fence->SetEventOnCompletion(FenceValue[&BBIndex], FenceEvent);
+        HRESULT hr = Fence[BBIndex]->SetEventOnCompletion(FenceValue[BBIndex], FenceEvent);
         if (FAILED(hr)) {
             throw "Failed to set fence event.";
         }
@@ -202,6 +203,6 @@ void VRD3D12::WaitForPrevFrame()
     }
 
     // increment fenceValue for next frame
-    FenceValue[&BBIndex]++;
+    FenceValue[BBIndex]++;
 }
 
