@@ -97,7 +97,7 @@ INT CALLBACK WinMain(HINSTANCE inst, HINSTANCE prev_inst, LPSTR arg, int show_cm
 	GameTimer::Start();
 	//int fc{ 0 };
 	//auto fps = fc / (int)dx.g.GameTime();
-	InitWindow(L"D3D12VR", prev_inst, show_cmd, 1024, 764, false);
+	InitWindow(L"VREngine - D3D12", prev_inst, show_cmd, 1024, 764, false);
 	StartLoop(&Init, &D3D12Render);
 	return 0;
 }
