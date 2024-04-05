@@ -2,7 +2,27 @@
 
 VRD3D12 dx;
 HWND hwnd = nullptr;
+void DestroyEngine()
+{
+	dx.DestroyResources();
+	dx.Device.Reset();
+	dx.Queue.Reset();
+	dx.Factory.Reset();
+	dx.Swap.Reset();
+	dx.List.Reset();
+	dx.RTVH.Reset();
+	dx.PSO.Reset();
+	dx.RSO.Reset();
+	dx.VertexBuffer.Reset();
 
+	{
+		dx.Alloc->Reset();
+		dx.Fence->Release();
+		dx.RT->Reset();
+	}
+	dx.Debug.Reset();
+	CloseHandle(dx.FenceEvent);
+}
 HWND InitWindow(LPCWSTR name, HINSTANCE inst, int show_cmd, int width, int height, bool fullscreen)
 {
 
@@ -99,6 +119,7 @@ INT CALLBACK WinMain(HINSTANCE inst, HINSTANCE prev_inst, LPSTR arg, int show_cm
 	//auto fps = fc / (int)dx.g.GameTime();
 	InitWindow(L"VREngine - D3D12", prev_inst, show_cmd, 1024, 764, false);
 	StartLoop(&Init, &D3D12Render);
+	//DestroyEngine();
 	return 0;
 }
 

@@ -12,6 +12,7 @@
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib,"D3d12.lib")
+
 class VRD3D12 {
 public:
 	template<typename A>
@@ -48,9 +49,9 @@ public:
     D3D12_RECT sr;
     ID3D12CommandList* const commandLists[1] = {List.Get()};
     //FenceObjects
-    COM<ID3D12Fence> Fence[Buffers];
-    UINT FenceValue[Buffers];
-    UINT64 FrameFenceValues[Buffers] = {};
+    COM<ID3D12Fence> Fence;
+    UINT FenceValue;
+    UINT64 FrameFenceValues = {};
     HANDLE FenceEvent;
     GameTimer g;
     //Window Objects 
@@ -62,6 +63,7 @@ public:
     //Functions
     void CreateContexts(HWND win);
     void InitBaseAssets();
+    void DestroyResources();
     void SetFenceEvents();
     void FindAdaptors();
     void WaitForPrevFrame();
@@ -70,8 +72,10 @@ protected:
     enum class ShaderT
     {
 	    ST_VS = 0x1,
-        ST_PS = 0x1,
+        ST_PS = 0x2,
         //Add other shader types if needed.
     };
     bool CreateShader(LPCWSTR ShaderName, std::string Main,ShaderT& Type);
+private:
+    std::vector<ID3D12Resource*> ResourcePool;
 };
