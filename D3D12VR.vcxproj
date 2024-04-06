@@ -141,6 +141,7 @@
     <ClCompile Include="BSTime.cpp" />
     <ClCompile Include="D3D12MemAlloc.cpp" />
     <ClCompile Include="D3D12VR.cpp" />
+    <ClCompile Include="ThirdParty\stb\stb_vorbis.c" />
     <ClCompile Include="VRCore.cpp" />
     <ClCompile Include="VRD3D12.cpp" />
   </ItemGroup>
@@ -148,6 +149,27 @@
     <ClInclude Include="BlackSpaceDirectX.h" />
     <ClInclude Include="BSTime.h" />
     <ClInclude Include="D3D12MemAlloc.h" />
+    <ClInclude Include="Engine\Font\SDFFontEngine.h" />
+    <ClInclude Include="ThirdParty\stb\stb_connected_components.h" />
+    <ClInclude Include="ThirdParty\stb\stb_c_lexer.h" />
+    <ClInclude Include="ThirdParty\stb\stb_divide.h" />
+    <ClInclude Include="ThirdParty\stb\stb_ds.h" />
+    <ClInclude Include="ThirdParty\stb\stb_dxt.h" />
+    <ClInclude Include="ThirdParty\stb\stb_easy_font.h" />
+    <ClInclude Include="ThirdParty\stb\stb_herringbone_wang_tile.h" />
+    <ClInclude Include="ThirdParty\stb\stb_hexwave.h" />
+    <ClInclude Include="ThirdParty\stb\stb_image.h" />
+    <ClInclude Include="ThirdParty\stb\stb_image_resize2.h" />
+    <ClInclude Include="ThirdParty\stb\stb_image_write.h" />
+    <ClInclude Include="ThirdParty\stb\stb_include.h" />
+    <ClInclude Include="ThirdParty\stb\stb_leakcheck.h" />
+    <ClInclude Include="ThirdParty\stb\stb_perlin.h" />
+    <ClInclude Include="ThirdParty\stb\stb_rect_pack.h" />
+    <ClInclude Include="ThirdParty\stb\stb_sprintf.h" />
+    <ClInclude Include="ThirdParty\stb\stb_textedit.h" />
+    <ClInclude Include="ThirdParty\stb\stb_tilemap_editor.h" />
+    <ClInclude Include="ThirdParty\stb\stb_truetype.h" />
+    <ClInclude Include="ThirdParty\stb\stb_voxel_render.h" />
     <ClInclude Include="VRCore.h" />
     <ClInclude Include="VRD3D12.h" />
   </ItemGroup>
@@ -167,6 +189,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shaders\Font\SDFFontVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

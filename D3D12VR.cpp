@@ -1,6 +1,9 @@
 #include "VRD3D12.h"
 
 VRD3D12 dx;
+int saved_width = 0;
+int saved_height = 0;
+
 HWND hwnd = nullptr;
 void DestroyEngine()
 {
@@ -25,7 +28,6 @@ void DestroyEngine()
 }
 HWND InitWindow(LPCWSTR name, HINSTANCE inst, int show_cmd, int width, int height, bool fullscreen)
 {
-
 	if (fullscreen) {
 		HMONITOR hmon = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
 		MONITORINFO mi = { sizeof(mi) };
@@ -71,7 +73,8 @@ HWND InitWindow(LPCWSTR name, HINSTANCE inst, int show_cmd, int width, int heigh
 
 	ShowWindow(hwnd, show_cmd);
 	UpdateWindow(hwnd);
-
+	saved_width = width;
+	saved_height = height;
 	return hwnd;
 }
 
